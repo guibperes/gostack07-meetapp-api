@@ -1,5 +1,6 @@
 import express from 'express'
 
+import { Database } from './database'
 import routes from './routes'
 
 export class App {
@@ -20,6 +21,7 @@ export class App {
 
   async start () {
     try {
+      await new Database()
       await this.server.listen(3000)
 
       console.log('Server started on port 3000')
