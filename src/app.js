@@ -1,4 +1,5 @@
 import express from 'express'
+import morgan from 'morgan'
 
 import { Database } from './database'
 import routes from './routes'
@@ -13,6 +14,7 @@ export class App {
 
   middlewares () {
     this.server.use(express.json())
+    this.server.use(morgan('dev'))
   }
 
   routes () {
