@@ -5,7 +5,9 @@
     "start": "sucrase-node src/server.js",
     "dev": "nodemon src/server.js",
     "migration:run": "sequelize db:migrate",
-    "migration:undo": "sequelize db:migrate:undo"
+    "migration:undo": "sequelize db:migrate:undo",
+    "services:start": "docker-compose up -d",
+    "services:stop": "docker-compose stop"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
