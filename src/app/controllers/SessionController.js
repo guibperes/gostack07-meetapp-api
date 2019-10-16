@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import * as Yup from 'yup'
 
-import { AUTH_SECRET, AUTH_EXPIRATION_TIME } from '../../config/auth'
+import { AUTH_SECRET, AUTH_EXPIRATION_TIME } from '../../config/env'
 import { User } from '../models/User'
 
 class SessionController {

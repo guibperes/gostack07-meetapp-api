@@ -1,7 +1,7 @@
 import { promisify } from 'util'
 import jwt from 'jsonwebtoken'
 
-import { AUTH_SECRET } from '../config/auth'
+import { AUTH_SECRET } from '../config/env'
 
 export async function auth (req, res, next) {
   const { 'x-user-token': token } = req.headers

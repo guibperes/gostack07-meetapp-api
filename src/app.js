@@ -1,6 +1,7 @@
 import express from 'express'
 import morgan from 'morgan'
 
+import { IS_DEV, APP_PORT } from './config/env'
 import { Database } from './database'
 import routes from './routes'
 
@@ -14,7 +15,7 @@ class App {
 
   middlewares () {
     this.server.use(express.json())
-    this.server.use(morgan('dev'))
+    this.server.use(morgan(IS_DEV ? 'dev' : 'common'))
   }
 
   routes () {
@@ -24,9 +25,9 @@ class App {
   async start () {
     try {
       await new Database()
-      await this.server.listen(3000)
+      await this.server.listen(APP_PORT)
 
-      console.log('Server started on port 3000')
+      console.log(`Server started on port ${APP_PORT}`)
     } catch (error) {
       console.log(error)
       process.exit(1)
