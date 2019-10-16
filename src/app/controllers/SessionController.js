@@ -4,7 +4,7 @@ import * as Yup from 'yup'
 import { AUTH_SECRET, AUTH_EXPIRATION_TIME } from '../../config/auth'
 import { User } from '../models/User'
 
-export class SessionController {
+class SessionController {
   async store (req, res) {
     const schema = Yup.object().shape({
       email: Yup.string().email().required(),
@@ -44,3 +44,5 @@ export class SessionController {
     res.json({ id, name, email, provider, token })
   }
 }
+
+export default new SessionController()

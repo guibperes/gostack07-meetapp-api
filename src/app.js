@@ -4,7 +4,7 @@ import morgan from 'morgan'
 import { Database } from './database'
 import routes from './routes'
 
-export class App {
+class App {
   constructor () {
     this.server = express()
 
@@ -33,3 +33,5 @@ export class App {
     }
   }
 }
+
+export default new App()
