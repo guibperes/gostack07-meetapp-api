@@ -35,13 +35,13 @@ class SessionController {
       })
     }
 
-    const { id, name, email, provider } = user
+    const { id, name, email } = user
 
     const token = jwt.sign({ id }, AUTH_SECRET, {
       expiresIn: AUTH_EXPIRATION_TIME
     })
 
-    res.json({ id, name, email, provider, token })
+    res.json({ id, name, email, token })
   }
 }
 
