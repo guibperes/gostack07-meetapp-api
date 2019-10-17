@@ -25,7 +25,7 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false
       },
-      banner: {
+      banner_id: {
         type: Sequelize.INTEGER,
         references: { model: 'files', key: 'id' },
         onUpdate: 'CASCADE',

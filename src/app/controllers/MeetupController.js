@@ -11,7 +11,7 @@ class MeetupController {
       description: Yup.string().required(),
       location: Yup.string().required(),
       date: Yup.date().required(),
-      banner: Yup.number()
+      banner_id: Yup.number()
     })
 
     try {
@@ -26,12 +26,12 @@ class MeetupController {
       })
     }
 
-    const { id, title, description, location, date, banner } = await Meetup.create({
+    const { id, title, description, location, date } = await Meetup.create({
       ...req.body,
       user_id: req.user
     })
 
-    return res.json({ id, title, description, location, date, banner })
+    return res.json({ id, title, description, location, date })
   }
 
   async update (req, res) {
@@ -40,7 +40,7 @@ class MeetupController {
       description: Yup.string(),
       location: Yup.string(),
       date: Yup.date(),
-      banner: Yup.number()
+      banner_id: Yup.number()
     })
 
     try {
@@ -55,8 +55,8 @@ class MeetupController {
       })
     }
 
-    if (req.body.banner) {
-      const banner = await File.findByPk(req.body.banner)
+    if (req.body.banner_id) {
+      const banner = await File.findByPk(req.body.banner_id)
 
       if (!banner) {
         return res.status(404).json({
