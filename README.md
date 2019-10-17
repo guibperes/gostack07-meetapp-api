@@ -37,7 +37,7 @@ Para atualizar a senha, o usuário deve também enviar um campo de confirmação
 
 Crie uma rota para upload de arquivos que cadastra em uma tabela o caminho e o nome do arquivo e retorna todos os dados do arquivo cadastrado.
 
-### [TODO] Gerenciamento de Meetups
+### [DOING] Gerenciamento de Meetups
 
 O usuário pode cadastrar meetups na plataforma com título do meetup, descrição, localização, data e hora e imagem (banner). Todos os campos são obrigatórios. Adicione também um campo `user_id` que armazena o `id` do usuário que organiza o evento.
 
