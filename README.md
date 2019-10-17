@@ -33,7 +33,7 @@ Para atualizar a senha, o usuário deve também enviar um campo de confirmação
 - Criptografe a senha do usuário para segurança
 - Realize a validação dos dados de entrada
 
-### [TODO] Gerenciamento de Arquivos
+### [DONE] Gerenciamento de Arquivos
 
 Crie uma rota para upload de arquivos que cadastra em uma tabela o caminho e o nome do arquivo e retorna todos os dados do arquivo cadastrado.
 

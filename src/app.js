@@ -1,3 +1,4 @@
+import { resolve } from 'path'
 import express from 'express'
 import 'express-async-errors'
 import morgan from 'morgan'
@@ -13,13 +14,17 @@ class App {
 
     this.middlewares()
     this.routes()
+    this.errorHandler()
+    this.notFoundHandler()
   }
 
   middlewares () {
     this.server.use(express.json())
     this.server.use(morgan(IS_DEV ? 'dev' : 'common'))
-    this.errorHandler()
-    this.notFoundHandler()
+    this.server.use(
+      '/files',
+      express.static(resolve(__dirname, '..', 'tmp', 'uploads'))
+    )
   }
 
   routes () {
