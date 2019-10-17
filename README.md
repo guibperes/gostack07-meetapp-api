@@ -43,7 +43,7 @@ Crie uma rota para upload de arquivos que cadastra em uma tabela o caminho e o n
 
 [DONE] Não deve ser possível cadastrar meetups com datas que já passaram.
 
-O usuário também deve poder editar todos os dados de meetups que ainda não aconteceram, e que ele é organizador.
+[DONE] O usuário também deve poder editar todos os dados de meetups que ainda não aconteceram, e que ele é organizador.
 
 Crie uma rota para listar os meetups que são organizados pelo usuário logado.
 
