@@ -2,6 +2,7 @@ import * as Yup from 'yup'
 import { parseISO, isPast } from 'date-fns'
 
 import { Meetup } from '../models/Meetup'
+import { File } from '../models/File'
 
 class MeetupController {
   async store (req, res) {
@@ -54,6 +55,16 @@ class MeetupController {
       })
     }
 
+    if (req.body.banner) {
+      const banner = await File.findByPk(req.body.banner)
+
+      if (!banner) {
+        return res.status(404).json({
+          message: 'Cannot find banner with provided id'
+        })
+      }
+    }
+
     const { id: meetupId } = req.params
 
     const meetup = await Meetup.findOne({
@@ -77,11 +88,10 @@ class MeetupController {
       title,
       description,
       location,
-      date,
-      banner
+      date
     } = await meetup.update(req.body)
 
-    return res.json({ id, title, description, location, date, banner })
+    return res.json({ id, title, description, location, date })
   }
 }
 
