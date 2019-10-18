@@ -39,7 +39,7 @@ class MeetupController {
     })
 
     if (userHaveOne) {
-      return res.status(401).json({
+      return res.status(400).json({
         message: 'Cannot create two hour proximity meetups'
       })
     }
