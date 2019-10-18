@@ -1,13 +1,15 @@
 import * as Yup from 'yup'
 
 import { User } from '../models/User'
+import { File } from '../models/File'
 
 class UserController {
   async store (req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
       email: Yup.string().email().required(),
-      password: Yup.string().required().min(6)
+      password: Yup.string().required().min(6),
+      avatar_id: Yup.number()
     })
 
     try {
@@ -16,7 +18,7 @@ class UserController {
       return res.status(400).json(error)
     }
 
-    const { email: bodyEmail } = req.body
+    const { email: bodyEmail, avatar_id } = req.body
 
     const userExists = await User.findOne({ where: { email: bodyEmail } })
 
@@ -24,6 +26,16 @@ class UserController {
       return res.status(400).json({
         message: 'User already exists'
       })
+    }
+
+    if (avatar_id) {
+      const avatar = await File.findByPk(avatar_id)
+
+      if (!avatar) {
+        return res.status(404).json({
+          message: 'Cannot find avatar with provided id'
+        })
+      }
     }
 
     const { id, name, email } = await User.create(req.body)
@@ -40,7 +52,8 @@ class UserController {
         .when('password', (password, field) =>
           password ? field.required() : field
         ),
-      password: Yup.string().min(6)
+      password: Yup.string().min(6),
+      avatar_id: Yup.number()
     })
 
     try {
@@ -49,7 +62,7 @@ class UserController {
       return res.status(400).json(error)
     }
 
-    const { email: bodyEmail, oldPassword } = req.body
+    const { email: bodyEmail, oldPassword, avatar_id } = req.body
 
     const user = await User.findByPk(req.user)
 
@@ -69,6 +82,16 @@ class UserController {
       if (!isValidPassword) {
         return res.status(400).json({
           message: 'Password does not match'
+        })
+      }
+    }
+
+    if (avatar_id) {
+      const avatar = await File.findByPk(avatar_id)
+
+      if (!avatar) {
+        return res.status(404).json({
+          message: 'Cannot find avatar with provided id'
         })
       }
     }
