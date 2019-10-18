@@ -37,15 +37,15 @@ Para atualizar a senha, o usuário deve também enviar um campo de confirmação
 
 Crie uma rota para upload de arquivos que cadastra em uma tabela o caminho e o nome do arquivo e retorna todos os dados do arquivo cadastrado.
 
-### [DOING] Gerenciamento de Meetups
+### [DONE] Gerenciamento de Meetups
 
-[DONE] O usuário pode cadastrar meetups na plataforma com título do meetup, descrição, localização, data e hora e imagem (banner). Todos os campos são obrigatórios. Adicione também um campo `user_id` que armazena o `id` do usuário que organiza o evento.
+O usuário pode cadastrar meetups na plataforma com título do meetup, descrição, localização, data e hora e imagem (banner). Todos os campos são obrigatórios. Adicione também um campo `user_id` que armazena o `id` do usuário que organiza o evento.
 
-[DONE] Não deve ser possível cadastrar meetups com datas que já passaram.
+Não deve ser possível cadastrar meetups com datas que já passaram.
 
-[DONE] O usuário também deve poder editar todos os dados de meetups que ainda não aconteceram, e que ele é organizador.
+O usuário também deve poder editar todos os dados de meetups que ainda não aconteceram, e que ele é organizador.
 
-[DONE] Crie uma rota para listar os meetups que são organizados pelo usuário logado.
+Crie uma rota para listar os meetups que são organizados pelo usuário logado.
 
 O usuário deve poder cancelar meetups organizados por ele e que ainda não aconteceram. O cancelamento deve deletar o meetup da base de dados.
 

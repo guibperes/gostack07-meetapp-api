@@ -134,6 +134,32 @@ class MeetupController {
 
     return res.json({ id, title, description, location, date })
   }
+
+  async delete (req, res) {
+    const { id } = req.params
+
+    const meetup = await Meetup.findOne({
+      where: {
+        id,
+        user_id: req.user
+      }
+    })
+
+    if (!meetup) {
+      return res.status(404).json({
+        message: 'Meetup not founded with provided id'
+      })
+    }
+
+    if (isPast(meetup.date, Date.now())) {
+      return res.status(401).json({
+        message: 'Cannot cancelate a past meetup'
+      })
+    }
+    await meetup.destroy()
+
+    return res.status(204).json()
+  }
 }
 
 export default new MeetupController()
