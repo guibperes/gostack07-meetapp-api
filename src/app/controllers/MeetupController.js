@@ -85,7 +85,8 @@ class MeetupController {
       })
     }
 
-    const { id: meetupId, banner_id } = req.params
+    const { id: meetupId } = req.params
+    const { banner_id } = req.body
 
     const meetup = await Meetup.findOne({
       where: { id: meetupId, user_id: req.user }
