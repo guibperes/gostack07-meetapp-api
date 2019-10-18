@@ -21,22 +21,14 @@ class MeetupController {
       return res.status(400).json(error)
     }
 
+    const { banner_id } = req.body
+
     const parsedDate = parseISO(req.body.date)
 
     if (isPast(parsedDate, Date.now())) {
       return res.status(400).json({
         message: 'Cannot create a meetup with a past date'
       })
-    }
-
-    if (req.body.banner_id) {
-      const banner = await File.findByPk(req.body.banner_id)
-
-      if (!banner) {
-        return res.status(404).json({
-          message: 'Cannot find banner with provided id'
-        })
-      }
     }
 
     const userHaveOne = await Meetup.findOne({
@@ -52,6 +44,16 @@ class MeetupController {
       return res.status(400).json({
         message: 'Cannot create two hour proximity meetups'
       })
+    }
+
+    if (banner_id) {
+      const banner = await File.findByPk(banner_id)
+
+      if (!banner) {
+        return res.status(404).json({
+          message: 'Cannot find banner with provided id'
+        })
+      }
     }
 
     const { id, title, description, location, date } = await Meetup.create({
@@ -83,25 +85,15 @@ class MeetupController {
       })
     }
 
-    if (req.body.banner_id) {
-      const banner = await File.findByPk(req.body.banner_id)
-
-      if (!banner) {
-        return res.status(404).json({
-          message: 'Cannot find banner with provided id'
-        })
-      }
-    }
-
-    const { id: meetupId } = req.params
+    const { id: meetupId, banner_id } = req.params
 
     const meetup = await Meetup.findOne({
       where: { id: meetupId, user_id: req.user }
     })
 
     if (!meetup) {
-      return res.status(401).json({
-        message: 'You cannot update this meetup'
+      return res.status(404).json({
+        message: 'Meetup not founded with provided id'
       })
     }
 
@@ -109,6 +101,16 @@ class MeetupController {
       return res.status(401).json({
         message: 'This meetup has already happened'
       })
+    }
+
+    if (banner_id) {
+      const banner = await File.findByPk(banner_id)
+
+      if (!banner) {
+        return res.status(404).json({
+          message: 'Cannot find banner with provided id'
+        })
+      }
     }
 
     const {
