@@ -29,6 +29,16 @@ class MeetupController {
       })
     }
 
+    if (req.body.banner_id) {
+      const banner = await File.findByPk(req.body.banner_id)
+
+      if (!banner) {
+        return res.status(404).json({
+          message: 'Cannot find banner with provided id'
+        })
+      }
+    }
+
     const userHaveOne = await Meetup.findOne({
       where: {
         user_id: req.user,
