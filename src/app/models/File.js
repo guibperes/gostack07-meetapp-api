@@ -22,4 +22,8 @@ export class File extends Model {
 
     return this
   }
+
+  static associate (models) {
+    this.belongsTo(models.User, { foreignKey: 'uploaded_by' })
+  }
 }

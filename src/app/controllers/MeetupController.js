@@ -47,7 +47,12 @@ class MeetupController {
     }
 
     if (banner_id) {
-      const banner = await File.findByPk(banner_id)
+      const banner = await File.findOne({
+        where: {
+          id: banner_id,
+          uploaded_by: req.user
+        }
+      })
 
       if (!banner) {
         return res.status(404).json({
@@ -105,7 +110,12 @@ class MeetupController {
     }
 
     if (banner_id) {
-      const banner = await File.findByPk(banner_id)
+      const banner = await File.findOne({
+        where: {
+          id: banner_id,
+          uploaded_by: req.user
+        }
+      })
 
       if (!banner) {
         return res.status(404).json({

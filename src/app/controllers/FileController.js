@@ -6,7 +6,8 @@ class FileController {
 
     const { id, name, path, url } = await File.create({
       name: originalname,
-      path: filename
+      path: filename,
+      uploaded_by: req.user
     })
 
     return res.json({ id, name, path, url })

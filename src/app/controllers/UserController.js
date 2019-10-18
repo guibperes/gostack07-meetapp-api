@@ -8,8 +8,7 @@ class UserController {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
       email: Yup.string().email().required(),
-      password: Yup.string().required().min(6),
-      avatar_id: Yup.number()
+      password: Yup.string().required().min(6)
     })
 
     try {
@@ -18,7 +17,7 @@ class UserController {
       return res.status(400).json(error)
     }
 
-    const { email: bodyEmail, avatar_id } = req.body
+    const { email: bodyEmail } = req.body
 
     const userExists = await User.findOne({ where: { email: bodyEmail } })
 
@@ -28,17 +27,10 @@ class UserController {
       })
     }
 
-    if (avatar_id) {
-      const avatar = await File.findByPk(avatar_id)
-
-      if (!avatar) {
-        return res.status(404).json({
-          message: 'Cannot find avatar with provided id'
-        })
-      }
-    }
-
-    const { id, name, email } = await User.create(req.body)
+    const { id, name, email } = await User.create({
+      ...req.body,
+      avatar_id: null
+    })
 
     return res.json({ id, name, email })
   }
@@ -87,7 +79,12 @@ class UserController {
     }
 
     if (avatar_id) {
-      const avatar = await File.findByPk(avatar_id)
+      const avatar = await File.findOne({
+        where: {
+          id: avatar_id,
+          uploaded_by: req.user
+        }
+      })
 
       if (!avatar) {
         return res.status(404).json({
