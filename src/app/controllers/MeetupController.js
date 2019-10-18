@@ -1,5 +1,6 @@
 import * as Yup from 'yup'
-import { parseISO, isPast } from 'date-fns'
+import { parseISO, isPast, subHours, addHours } from 'date-fns'
+import { Op } from 'sequelize'
 
 import { Meetup } from '../models/Meetup'
 import { File } from '../models/File'
@@ -20,9 +21,26 @@ class MeetupController {
       return res.status(400).json(error)
     }
 
-    if (isPast(parseISO(req.body.date), Date.now())) {
+    const parsedDate = parseISO(req.body.date)
+
+    if (isPast(parsedDate, Date.now())) {
       return res.status(400).json({
         message: 'Cannot create a meetup with a past date'
+      })
+    }
+
+    const userHaveOne = await Meetup.findOne({
+      where: {
+        user_id: req.user,
+        date: {
+          [Op.between]: [subHours(parsedDate, 2), addHours(parsedDate, 2)]
+        }
+      }
+    })
+
+    if (userHaveOne) {
+      return res.status(401).json({
+        message: 'Cannot create two hour proximity meetups'
       })
     }
 
