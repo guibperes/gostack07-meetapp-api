@@ -53,9 +53,9 @@ O usuário deve poder cancelar meetups organizados por ele e que ainda não acon
 
 [DONE] O usuário deve poder se inscrever em meetups que não organiza.
 
-[DOING] O usuário não pode se inscrever em meetups que já aconteceram.
+[DONE] O usuário não pode se inscrever em meetups que já aconteceram.
 
-O usuário não pode se inscrever no mesmo meetup duas vezes.
+[DOING] O usuário não pode se inscrever no mesmo meetup duas vezes.
 
 O usuário não pode se inscrever em dois meetups que acontecem no mesmo horário.
 
