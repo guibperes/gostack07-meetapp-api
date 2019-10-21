@@ -19,6 +19,10 @@ module.exports = {
         allowNull: false,
         references: { model: 'meetups', key: 'id' }
       },
+      meetup_date: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false

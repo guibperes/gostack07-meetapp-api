@@ -5,7 +5,8 @@ export class Subscription extends Model {
     super.init(
       {
         user_id: Sequelize.INTEGER,
-        meetup_id: Sequelize.INTEGER
+        meetup_id: Sequelize.INTEGER,
+        meetup_date: Sequelize.DATE
       },
       {
         sequelize

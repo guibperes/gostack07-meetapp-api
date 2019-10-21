@@ -57,9 +57,9 @@ O usuário deve poder cancelar meetups organizados por ele e que ainda não acon
 
 [DONE] O usuário não pode se inscrever no mesmo meetup duas vezes.
 
-[DOING] O usuário não pode se inscrever em dois meetups que acontecem no mesmo horário.
+[DONE] O usuário não pode se inscrever em dois meetups que acontecem no mesmo horário.
 
-Sempre que em um usuário se inscrever no meetup, envie um email ao organizador contendo os dados relacionados ao usuário inscrito. O template de email fica por sua conta.
+[DOING] Sempre que em um usuário se inscrever no meetup, envie um email ao organizador contendo os dados relacionados ao usuário inscrito. O template de email fica por sua conta.
 
 ### [TODO] Listagem de Meetups
 

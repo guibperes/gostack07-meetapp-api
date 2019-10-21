@@ -1,4 +1,5 @@
-import { isPast } from 'date-fns'
+import { Op } from 'sequelize'
+import { isPast, subHours, addHours } from 'date-fns'
 
 import { Subscription } from '../models/Subscription'
 import { Meetup } from '../models/Meetup'
@@ -34,12 +35,28 @@ class SubscriptionController {
       })
     }
 
-    const { id } = await Subscription.create({
-      meetup_id,
-      user_id: req.user
+    const userSubscribedOnTime = await Subscription.findOne({
+      where: {
+        user_id: req.user,
+        meetup_date: {
+          [Op.between]: [subHours(meetup.date, 2), addHours(meetup.date, 2)]
+        }
+      }
     })
 
-    return res.json({ id })
+    if (userSubscribedOnTime) {
+      return res.status(401).json({
+        message: 'User already subscribed for a meetup on this time'
+      })
+    }
+
+    const { id, meetup_date } = await Subscription.create({
+      meetup_id,
+      user_id: req.user,
+      meetup_date: meetup.date
+    })
+
+    return res.json({ id, meetup_date })
   }
 }
 
