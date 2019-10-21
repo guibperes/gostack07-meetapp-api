@@ -21,6 +21,19 @@ class SubscriptionController {
       })
     }
 
+    const userSubscribed = await Subscription.findOne({
+      where: {
+        meetup_id,
+        user_id: req.user
+      }
+    })
+
+    if (userSubscribed) {
+      return res.status(401).json({
+        message: 'User already subscribed for this meetup'
+      })
+    }
+
     const { id } = await Subscription.create({
       meetup_id,
       user_id: req.user
