@@ -4,13 +4,15 @@ import dbConfig from '../config/database'
 import { User } from '../app/models/User'
 import { File } from '../app/models/File'
 import { Meetup } from '../app/models/Meetup'
+import { Subscription } from '../app/models/Subscription'
 
 export class Database {
   constructor () {
     this.models = [
       User,
       File,
-      Meetup
+      Meetup,
+      Subscription
     ]
 
     this.init()
