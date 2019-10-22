@@ -61,7 +61,7 @@ O usuário não pode se inscrever em dois meetups que acontecem no mesmo horári
 
 Sempre que em um usuário se inscrever no meetup, envie um email ao organizador contendo os dados relacionados ao usuário inscrito. O template de email fica por sua conta.
 
-### [TODO] Listagem de Meetups
+### [DOING] Listagem de Meetups
 
 Crie uma rota para listar os meetups com filtro por data (não por hora), os resultados dessa listagem devem vir paginados em 10 itens por página. Abaixo tem um exemplo de chamada para a rota de listagem dos meetups:
 
