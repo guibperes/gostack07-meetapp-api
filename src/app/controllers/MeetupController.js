@@ -11,7 +11,6 @@ import { Op } from 'sequelize'
 
 import { Meetup } from '../models/Meetup'
 import { File } from '../models/File'
-import { User } from '../models/User'
 
 class MeetupController {
   async store (req, res) {
@@ -185,18 +184,15 @@ class MeetupController {
       attributes: ['id', 'title', 'description', 'location', 'date'],
       include: [
         {
-          model: File,
-          as: 'banner',
+          association: 'banner',
           attributes: ['name', 'path', 'url']
         },
         {
-          model: User,
-          as: 'organizer',
+          association: 'organizer',
           attributes: ['id', 'name', 'email'],
           include: [
             {
-              model: File,
-              as: 'avatar',
+              association: 'avatar',
               attributes: ['name', 'path', 'url']
             }
           ]

@@ -1,5 +1,4 @@
 import { Meetup } from '../models/Meetup'
-import { File } from '../models/File'
 
 class ScheduleController {
   async index (req, res) {
@@ -8,8 +7,7 @@ class ScheduleController {
       attributes: ['id', 'title', 'description', 'location', 'date'],
       include: [
         {
-          model: File,
-          as: 'banner',
+          association: 'banner',
           attributes: ['name', 'path', 'url']
         }
       ]
