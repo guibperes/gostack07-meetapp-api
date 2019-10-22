@@ -65,7 +65,7 @@ Nessa listagem retorne também os dados do organizador.
 
 O usuário deve poder se inscrever em meetups que não organiza.
 
-O usuário não pode se inscrever em meetups que já aconteceram.
+[DONE] O usuário não pode se inscrever em meetups que já aconteceram.
 
 O usuário não pode se inscrever no mesmo meetup duas vezes.
 

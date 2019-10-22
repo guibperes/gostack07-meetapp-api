@@ -10,37 +10,6 @@ import SubscriptionMail from '../jobs/SubscriptionMail'
 class SubscriptionController {
   async store (req, res) {
     /*
-    const { id: meetup_id } = req.params
-
-    const meetup = await Meetup.findByPk(meetup_id, {
-      include: [
-        {
-          model: User,
-          as: 'organizer'
-        }
-      ]
-    })
-
-    if (!meetup) {
-      return res.status(400).json({
-        message: 'Cannot find meetup with provided id'
-      })
-    }
-
-    if (isPast(meetup.date, Date.now())) {
-      return res.status(400).json({
-        message: 'Cannot register to a past meetup'
-      })
-    }
-
-    const user = await User.findByPk(req.user)
-
-    if (!user) {
-      return res.status(401).json({
-        message: 'Cannot find user with provided token'
-      })
-    }
-
     const userSubscribed = await Subscription.findOne({
       where: {
         meetup_id,
@@ -75,8 +44,6 @@ class SubscriptionController {
       meetup_date: meetup.date
     })
 
-    await user.addMeetup()
-
     await Queue.add(SubscriptionMail.key, {
       meetup,
       user
@@ -84,6 +51,37 @@ class SubscriptionController {
 
     return res.json({ id, meetup_date })
     */
+    const { id: meetup_id } = req.params
+
+    const meetup = await Meetup.findByPk(meetup_id, {
+      include: [
+        {
+          model: User,
+          as: 'organizer'
+        }
+      ]
+    })
+
+    if (!meetup) {
+      return res.status(400).json({
+        message: 'Cannot find meetup with provided id'
+      })
+    }
+
+    if (isPast(meetup.date, Date.now())) {
+      return res.status(400).json({
+        message: 'Cannot register to a past meetup'
+      })
+    }
+
+    const user = await User.findByPk(req.user)
+
+    if (!user) {
+      return res.status(401).json({
+        message: 'Cannot find user with provided token'
+      })
+    }
+
     return res.json()
   }
 

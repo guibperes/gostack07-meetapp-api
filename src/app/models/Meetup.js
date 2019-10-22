@@ -33,14 +33,5 @@ export class Meetup extends Model {
         as: 'organizer'
       }
     )
-
-    this.belongsToMany(
-      models.User,
-      {
-        through: 'subscriptions',
-        foreignKey: 'user_id',
-        as: 'users'
-      }
-    )
   }
 }
