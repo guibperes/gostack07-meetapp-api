@@ -49,18 +49,6 @@ Crie uma rota para listar os meetups que são organizados pelo usuário logado.
 
 O usuário deve poder cancelar meetups organizados por ele e que ainda não aconteceram. O cancelamento deve deletar o meetup da base de dados.
 
-### [DONE] Inscrição no Meetup
-
-O usuário deve poder se inscrever em meetups que não organiza.
-
-O usuário não pode se inscrever em meetups que já aconteceram.
-
-O usuário não pode se inscrever no mesmo meetup duas vezes.
-
-O usuário não pode se inscrever em dois meetups que acontecem no mesmo horário.
-
-Sempre que em um usuário se inscrever no meetup, envie um email ao organizador contendo os dados relacionados ao usuário inscrito. O template de email fica por sua conta.
-
 ### [DONE] Listagem de Meetups
 
 Crie uma rota para listar os meetups com filtro por data (não por hora), os resultados dessa listagem devem vir paginados em 10 itens por página. Abaixo tem um exemplo de chamada para a rota de listagem dos meetups:
@@ -73,7 +61,19 @@ Nesse exemplo, listaremos a página 2 dos meetups que acontecerão no dia 01 de 
 
 Nessa listagem retorne também os dados do organizador.
 
-### [DOING] Listagem de Inscrições
+### [DOING] Inscrição no Meetup
+
+O usuário deve poder se inscrever em meetups que não organiza.
+
+O usuário não pode se inscrever em meetups que já aconteceram.
+
+O usuário não pode se inscrever no mesmo meetup duas vezes.
+
+O usuário não pode se inscrever em dois meetups que acontecem no mesmo horário.
+
+Sempre que em um usuário se inscrever no meetup, envie um email ao organizador contendo os dados relacionados ao usuário inscrito. O template de email fica por sua conta.
+
+### [TODO] Listagem de Inscrições
 
 Crie uma rota para listar os meetups em que o usuário logado está inscrito.
 

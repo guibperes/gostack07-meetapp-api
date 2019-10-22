@@ -2,13 +2,14 @@ import { Op } from 'sequelize'
 import { isPast, subHours, addHours } from 'date-fns'
 
 import Queue from '../../lib/Queue'
-import { Subscription } from '../models/Subscription'
 import { Meetup } from '../models/Meetup'
 import { User } from '../models/User'
+import { File } from '../models/File'
 import SubscriptionMail from '../jobs/SubscriptionMail'
 
 class SubscriptionController {
   async store (req, res) {
+    /*
     const { id: meetup_id } = req.params
 
     const meetup = await Meetup.findByPk(meetup_id, {
@@ -26,17 +27,17 @@ class SubscriptionController {
       })
     }
 
+    if (isPast(meetup.date, Date.now())) {
+      return res.status(400).json({
+        message: 'Cannot register to a past meetup'
+      })
+    }
+
     const user = await User.findByPk(req.user)
 
     if (!user) {
       return res.status(401).json({
         message: 'Cannot find user with provided token'
-      })
-    }
-
-    if (isPast(meetup.date, Date.now())) {
-      return res.status(400).json({
-        message: 'Cannot register to a past meetup'
       })
     }
 
@@ -74,12 +75,27 @@ class SubscriptionController {
       meetup_date: meetup.date
     })
 
+    await user.addMeetup()
+
     await Queue.add(SubscriptionMail.key, {
       meetup,
       user
     })
 
     return res.json({ id, meetup_date })
+    */
+    return res.json()
+  }
+
+  async index (req, res) {
+    const subscriptions = await User.findByPk(req.user, {
+      include: {
+        association: 'meetups',
+        attributes: ['id']
+      }
+    })
+
+    return res.json(subscriptions)
   }
 }
 

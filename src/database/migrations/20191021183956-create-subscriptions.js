@@ -12,16 +12,16 @@ module.exports = {
       user_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'users', key: 'id' }
+        references: { model: 'users', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       meetup_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'meetups', key: 'id' }
-      },
-      meetup_date: {
-        type: Sequelize.DATE,
-        allowNull: false
+        references: { model: 'meetups', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       created_at: {
         type: Sequelize.DATE,
