@@ -61,17 +61,17 @@ Nesse exemplo, listaremos a página 2 dos meetups que acontecerão no dia 01 de 
 
 Nessa listagem retorne também os dados do organizador.
 
-### [DOING] Inscrição no Meetup
+### [DONE] Inscrição no Meetup
 
-[DONE] O usuário deve poder se inscrever em meetups que não organiza.
+O usuário deve poder se inscrever em meetups que não organiza.
 
-[DONE] O usuário não pode se inscrever em meetups que já aconteceram.
+O usuário não pode se inscrever em meetups que já aconteceram.
 
 O usuário não pode se inscrever no mesmo meetup duas vezes.
 
 O usuário não pode se inscrever em dois meetups que acontecem no mesmo horário.
 
-[DONE] Sempre que em um usuário se inscrever no meetup, envie um email ao organizador contendo os dados relacionados ao usuário inscrito. O template de email fica por sua conta.
+Sempre que em um usuário se inscrever no meetup, envie um email ao organizador contendo os dados relacionados ao usuário inscrito. O template de email fica por sua conta.
 
 ### [DONE] Listagem de Inscrições
 

@@ -4,40 +4,10 @@ import { isPast, subHours, addHours } from 'date-fns'
 import Queue from '../../lib/Queue'
 import { Meetup } from '../models/Meetup'
 import { User } from '../models/User'
-import { File } from '../models/File'
 import SubscriptionMail from '../jobs/SubscriptionMail'
 
 class SubscriptionController {
   async store (req, res) {
-    /*
-    const userSubscribed = await Subscription.findOne({
-      where: {
-        meetup_id,
-        user_id: req.user
-      }
-    })
-
-    if (userSubscribed) {
-      return res.status(401).json({
-        message: 'User already subscribed for this meetup'
-      })
-    }
-
-    const userSubscribedOnTime = await Subscription.findOne({
-      where: {
-        user_id: req.user,
-        meetup_date: {
-          [Op.between]: [subHours(meetup.date, 2), addHours(meetup.date, 2)]
-        }
-      }
-    })
-
-    if (userSubscribedOnTime) {
-      return res.status(401).json({
-        message: 'User already subscribed for a meetup on this time'
-      })
-    }
-    */
     const { id: meetup_id } = req.params
 
     const meetup = await Meetup.findByPk(meetup_id, {
@@ -72,6 +42,28 @@ class SubscriptionController {
     if (!user) {
       return res.status(401).json({
         message: 'Cannot find user with provided token'
+      })
+    }
+
+    const userSubscribed = await user.getMeetups({ where: { id: meetup_id } })
+
+    if (userSubscribed.length > 0) {
+      return res.status(401).json({
+        message: 'User already subscribed for this meetup'
+      })
+    }
+
+    const userSubscribedOnTime = await user.getMeetups({
+      where: {
+        date: {
+          [Op.between]: [subHours(meetup.date, 2), addHours(meetup.date, 2)]
+        }
+      }
+    })
+
+    if (userSubscribedOnTime.length > 0) {
+      return res.status(401).json({
+        message: 'User already subscribed for a meetup on this time'
       })
     }
 
