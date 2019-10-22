@@ -37,19 +37,6 @@ class SubscriptionController {
         message: 'User already subscribed for a meetup on this time'
       })
     }
-
-    const { id, meetup_date } = await Subscription.create({
-      meetup_id,
-      user_id: req.user,
-      meetup_date: meetup.date
-    })
-
-    await Queue.add(SubscriptionMail.key, {
-      meetup,
-      user
-    })
-
-    return res.json({ id, meetup_date })
     */
     const { id: meetup_id } = req.params
 
@@ -68,6 +55,12 @@ class SubscriptionController {
       })
     }
 
+    if (meetup.user_id === req.user) {
+      return res.status(400).json({
+        message: 'Cannot register to a meetup that you organize'
+      })
+    }
+
     if (isPast(meetup.date, Date.now())) {
       return res.status(400).json({
         message: 'Cannot register to a past meetup'
@@ -82,21 +75,35 @@ class SubscriptionController {
       })
     }
 
+    await user.addMeetup(meetup)
+
+    await Queue.add(SubscriptionMail.key, {
+      meetup,
+      user
+    })
+
     return res.json()
   }
 
   async index (req, res) {
-    /*
-    const subscriptions = await User.findByPk(req.user, {
-      include: {
-        association: 'meetups',
-        attributes: ['id']
-      }
+    const user = await User.findByPk(req.user, {
+      include: [
+        {
+          association: 'meetups',
+          through: {
+            attributes: []
+          }
+        }
+      ]
     })
 
-    return res.json(subscriptions)
-    */
-    return res.json()
+    if (!user) {
+      return res.status(401).json({
+        message: 'Cannot find user with provided token'
+      })
+    }
+
+    return res.json(user)
   }
 }
 

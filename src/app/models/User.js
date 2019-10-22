@@ -32,6 +32,15 @@ export class User extends Model {
         as: 'avatar'
       }
     )
+
+    this.belongsToMany(
+      models.Meetup,
+      {
+        foreignKey: 'user_id',
+        through: 'users_meetups',
+        as: 'meetups'
+      }
+    )
   }
 
   verifyPassword (password) {

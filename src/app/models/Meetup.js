@@ -33,5 +33,14 @@ export class Meetup extends Model {
         as: 'organizer'
       }
     )
+
+    this.belongsToMany(
+      models.User,
+      {
+        foreignKey: 'meetup_id',
+        through: 'users_meetups',
+        as: 'users'
+      }
+    )
   }
 }
