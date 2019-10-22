@@ -1,18 +1,36 @@
 import { Op } from 'sequelize'
 import { isPast, subHours, addHours } from 'date-fns'
 
+import Queue from '../../lib/Queue'
 import { Subscription } from '../models/Subscription'
 import { Meetup } from '../models/Meetup'
+import { User } from '../models/User'
+import SubscriptionMail from '../jobs/SubscriptionMail'
 
 class SubscriptionController {
   async store (req, res) {
     const { id: meetup_id } = req.params
 
-    const meetup = await Meetup.findByPk(meetup_id)
+    const meetup = await Meetup.findByPk(meetup_id, {
+      include: [
+        {
+          model: User,
+          as: 'organizer'
+        }
+      ]
+    })
 
     if (!meetup) {
       return res.status(400).json({
         message: 'Cannot find meetup with provided id'
+      })
+    }
+
+    const user = await User.findByPk(req.user)
+
+    if (!user) {
+      return res.status(401).json({
+        message: 'Cannot find user with provided token'
       })
     }
 
@@ -54,6 +72,11 @@ class SubscriptionController {
       meetup_id,
       user_id: req.user,
       meetup_date: meetup.date
+    })
+
+    await Queue.add(SubscriptionMail.key, {
+      meetup,
+      user
     })
 
     return res.json({ id, meetup_date })
