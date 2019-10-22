@@ -88,6 +88,7 @@ class SubscriptionController {
   }
 
   async index (req, res) {
+    /*
     const subscriptions = await User.findByPk(req.user, {
       include: {
         association: 'meetups',
@@ -96,6 +97,8 @@ class SubscriptionController {
     })
 
     return res.json(subscriptions)
+    */
+    return res.json()
   }
 }
 
