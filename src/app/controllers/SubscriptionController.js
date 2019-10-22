@@ -90,10 +90,35 @@ class SubscriptionController {
       include: [
         {
           association: 'meetups',
+          where: {
+            date: {
+              [Op.gte]: Date.now()
+            }
+          },
           through: {
             attributes: []
-          }
+          },
+          attributes: ['id', 'title', 'description', 'location', 'date'],
+          include: [
+            {
+              association: 'banner',
+              attributes: ['name', 'path', 'url']
+            },
+            {
+              association: 'organizer',
+              attributes: ['id', 'name', 'email'],
+              include: [
+                {
+                  association: 'avatar',
+                  attributes: ['name', 'path', 'url']
+                }
+              ]
+            }
+          ]
         }
+      ],
+      order: [
+        [{ model: Meetup, as: 'meetups' }, 'date', 'ASC']
       ]
     })
 
@@ -103,7 +128,7 @@ class SubscriptionController {
       })
     }
 
-    return res.json(user)
+    return res.json(user.meetups)
   }
 }
 
