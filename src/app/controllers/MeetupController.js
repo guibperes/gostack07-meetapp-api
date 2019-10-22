@@ -1,9 +1,17 @@
 import * as Yup from 'yup'
-import { parseISO, isPast, subHours, addHours } from 'date-fns'
+import {
+  parseISO,
+  isPast,
+  subHours,
+  addHours,
+  startOfDay,
+  endOfDay
+} from 'date-fns'
 import { Op } from 'sequelize'
 
 import { Meetup } from '../models/Meetup'
 import { File } from '../models/File'
+import { User } from '../models/User'
 
 class MeetupController {
   async store (req, res) {
@@ -159,6 +167,44 @@ class MeetupController {
     await meetup.destroy()
 
     return res.status(204).json()
+  }
+
+  async index (req, res) {
+    const { page = 1, date } = req.query
+    const parsedDate = parseISO(date)
+
+    const meetups = await Meetup.findAll({
+      where: {
+        date: {
+          [Op.between]: [startOfDay(parsedDate), endOfDay(parsedDate)]
+        }
+      },
+      order: ['date'],
+      limit: 10,
+      offset: (page - 1) * 10,
+      attributes: ['id', 'title', 'description', 'location', 'date'],
+      include: [
+        {
+          model: File,
+          as: 'banner',
+          attributes: ['name', 'path', 'url']
+        },
+        {
+          model: User,
+          as: 'organizer',
+          attributes: ['id', 'name', 'email'],
+          include: [
+            {
+              model: File,
+              as: 'avatar',
+              attributes: ['name', 'path', 'url']
+            }
+          ]
+        }
+      ]
+    })
+
+    return res.json(meetups)
   }
 }
 
