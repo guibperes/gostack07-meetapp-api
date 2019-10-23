@@ -33,6 +33,14 @@ export class User extends Model {
       }
     )
 
+    this.hasMany(
+      models.File,
+      {
+        foreignKey: 'uploaded_by',
+        as: 'files'
+      }
+    )
+
     this.belongsToMany(
       models.Meetup,
       {

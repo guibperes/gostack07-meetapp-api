@@ -1,7 +1,6 @@
 import * as Yup from 'yup'
 
 import { User } from '../models/User'
-import { File } from '../models/File'
 
 class UserController {
   async store (req, res) {
@@ -79,14 +78,9 @@ class UserController {
     }
 
     if (avatar_id) {
-      const avatar = await File.findOne({
-        where: {
-          id: avatar_id,
-          uploaded_by: req.user
-        }
-      })
+      const avatar = await user.getFiles({ where: { id: avatar_id } })
 
-      if (!avatar) {
+      if (avatar.length === 0) {
         return res.status(404).json({
           message: 'Cannot find avatar with provided id'
         })

@@ -10,7 +10,7 @@ import {
 import { Op } from 'sequelize'
 
 import { Meetup } from '../models/Meetup'
-import { File } from '../models/File'
+import { User } from '../models/User'
 
 class MeetupController {
   async store (req, res) {
@@ -38,6 +38,14 @@ class MeetupController {
       })
     }
 
+    const user = await User.findByPk(req.user)
+
+    if (!user) {
+      return res.status(401).json({
+        message: 'Cannot find user with the provided token'
+      })
+    }
+
     const userHaveOne = await Meetup.findOne({
       where: {
         user_id: req.user,
@@ -54,14 +62,9 @@ class MeetupController {
     }
 
     if (banner_id) {
-      const banner = await File.findOne({
-        where: {
-          id: banner_id,
-          uploaded_by: req.user
-        }
-      })
+      const banner = await user.getFiles({ where: { id: banner_id } })
 
-      if (!banner) {
+      if (banner.length === 0) {
         return res.status(404).json({
           message: 'Cannot find banner with provided id'
         })
@@ -100,6 +103,14 @@ class MeetupController {
     const { id: meetupId } = req.params
     const { banner_id } = req.body
 
+    const user = await User.findByPk(req.user)
+
+    if (!user) {
+      return res.status(401).json({
+        message: 'Cannot find user with the provided token'
+      })
+    }
+
     const meetup = await Meetup.findOne({
       where: { id: meetupId, user_id: req.user }
     })
@@ -117,14 +128,9 @@ class MeetupController {
     }
 
     if (banner_id) {
-      const banner = await File.findOne({
-        where: {
-          id: banner_id,
-          uploaded_by: req.user
-        }
-      })
+      const banner = await user.getFiles({ where: { id: banner_id } })
 
-      if (!banner) {
+      if (banner.length === 0) {
         return res.status(404).json({
           message: 'Cannot find banner with provided id'
         })
