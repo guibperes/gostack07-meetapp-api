@@ -32,9 +32,9 @@ class App {
   }
 
   errorHandler () {
-    this.server.use((err, req, res, next) => {
+    this.server.use(async (err, req, res, next) => {
       if (IS_DEV) {
-        const errors = new Youch(err, req).toJSON()
+        const errors = await new Youch(err, req).toJSON()
 
         return res.status(500).json(errors)
       }
